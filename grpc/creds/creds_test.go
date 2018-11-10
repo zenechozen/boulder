@@ -24,8 +24,9 @@ func ClientTransportCredentials(host string, cert *x509.Certificate, caPriv *rsa
 		NotAfter:              time.Now().AddDate(1, 0, 0),
 		BasicConstraintsValid: true,
 		IsCA:                  false,
+		DNSNames:              []string{host},
 	}
-	derA, err := x509.CreateCertificate(rand.Reader, temp, temp, priv.Public(), priv)
+	derA, err := x509.CreateCertificate(rand.Reader, temp, cert, priv.Public(), caPriv)
 	conf := &tls.Config{
 		Certificates: []tls.Certificate{
 			{Certificate: [][]byte{derA}, PrivateKey: priv},
