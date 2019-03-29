@@ -5,7 +5,7 @@ import (
 	"net"
 )
 
-func Dial() (server, port string) (net.Conn, error) {
+func Dial(server, port string) (net.Conn, error) {
 	hostport := net.JoinHostPort(di.server, di.port)
 	var conn net.Conn
 	var err error
