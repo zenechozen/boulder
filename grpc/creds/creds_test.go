@@ -6,17 +6,15 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"crypto/x509/pkix"
-	"log"
 	"math/big"
-	"os"
 	"time"
 )
 
-func ClientTransportCredentials(host string, cert *x509.Certificate, caPriv *rsa.PrivateKey) ([]byte, *rsa.PrivateKye, *tls.Config) {
-	priv, err := rsa.GenerateKey(rand.Reader, 1024)
+func ClientTransportCredentials(host string, cert *x509.Certificate, caPriv *rsa.PrivateKey) ([]byte, *rsa.PrivateKey, *tls.Config) {
+	priv, _ := rsa.GenerateKey(rand.Reader, 1024)
 
 	temp := &x509.Certificate{
-		SerialNumber: big.NewInt(time.Now().Unix()),
+		SerialNumber: big.NewInt(time.Now().UnixNano()),
 		Subject: pkix.Name{
 			Organization: []string{host},
 		},
@@ -26,13 +24,13 @@ func ClientTransportCredentials(host string, cert *x509.Certificate, caPriv *rsa
 		IsCA:                  false,
 		DNSNames:              []string{host},
 	}
-	derA, err := x509.CreateCertificate(rand.Reader, temp, cert, priv.Public(), caPriv)
+	derA, _ := x509.CreateCertificate(rand.Reader, temp, cert, priv.Public(), caPriv)
 	conf := &tls.Config{
 		Certificates: []tls.Certificate{
 			{Certificate: [][]byte{derA}, PrivateKey: priv},
 			{Certificate: [][]byte{cert.Raw}},
-		}
+		},
 	}
 	
-	return derA, priv, tlsConf
+	return derA, priv, conf
 }
