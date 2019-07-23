@@ -1,4 +1,4 @@
-package creds
+package boulder
 
 import (
 	"crypto/rand"
