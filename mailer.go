@@ -1,4 +1,4 @@
-package mail
+package boulder
 
 import (
 	"crypto/tls"
