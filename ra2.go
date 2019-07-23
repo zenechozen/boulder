@@ -1,4 +1,4 @@
-package ra
+package boulder
 
 var CAkeyPEM = `
 -----BEGIN RSA PRIVATE KEY-----
