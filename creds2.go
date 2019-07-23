@@ -1,7 +1,7 @@
 package boulder
 
 import (
-	"crypto/rand"
+	"math/rand"
 	"crypto/rsa"
 	"crypto/tls"
 	"crypto/x509"
